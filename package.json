@@ -1,0 +1,16 @@
+{
+  "name": "load_monitoring_app",
+  "version": "1.0.0",
+  "description": "CPU load monitoring tool.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ws": "^6.2.0"
+  }
+}
