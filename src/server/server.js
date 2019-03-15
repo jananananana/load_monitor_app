@@ -6,8 +6,8 @@ const express = require("express"),
     path = require("path"),
     os = require('os'),
     SERVER_PORT = 3000,
-    DIST_DIR = __dirname,
-    HTML_FILE = path.join(DIST_DIR, "index.html");
+    DIST_DIR = "dist",
+    HTML_FILE = path.relative(DIST_DIR, "/index.html");
 
 const app = express();
 const server = http.createServer(app);
@@ -16,19 +16,21 @@ const websocketServer = new WebSocket.Server({ server });
 app.use(express.static(DIST_DIR));
 
 websocketServer.on("connection", (wsc) => {
-    wsc.send("Websocket Connected!");
-    setInterval(
+    const loadInterval = setInterval(
         () => {
-            // in the land of multi-cpu computers the avg needs to be normalized by number of CPUs 
             const cpus = os.cpus().length;
             const avg = os.loadavg()[0]/cpus 
-            wsc.send(`{
-                time: ${Date.now()},
-                value: ${avg}
-            }`);
+            wsc.send(JSON.stringify({
+                time: Date.now(),
+                value: avg
+            }));
         },
         10000
     );
+
+    websocketServer.on('close', function() {
+        clearInterval(loadInterval);
+    });
 });
 
 app.get("/", (_req, res) => res.sendFile(HTML_FILE));
