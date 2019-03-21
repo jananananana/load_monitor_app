@@ -1,15 +1,18 @@
 import { h, Component } from "preact";
+import { generateScales } from "../../lib/d3";
+import "../../styles/components/scatter_plot.css";
 
 export default class ScatterPlot extends Component {
     createCircles () {
-        const x = d => this.props.scales.xScale(d.ts);
-        const y = d => this.props.scales.yScale(+d.value.toFixed(2))
+        const { xScale, yScale } = generateScales(this.props);
+        const x = d => xScale(d.ts);
+        const y = d => yScale(+d.value.toFixed(2))
         return this.props.data.map(d =>
             <circle
+                className="scatter-plot-point"
                 cx={x(d)}
                 cy={y(d)}
                 key={`${x(d)}_${y(d)}`}
-                style={{ fill: "#AA2E00" }}
                 r={4}
             />
         );
@@ -17,7 +20,7 @@ export default class ScatterPlot extends Component {
 
     render() {
         return (
-            <g className="spark-line-scatter-group">{this.createCircles()}</g>
+            <g className="scatter-plot-group">{this.createCircles()}</g>
         );
     }
 }

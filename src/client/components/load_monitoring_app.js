@@ -4,6 +4,7 @@ import SVGContainer from "./svg/svg_container";
 
 const MAX_DATA_LEN = 60;
 const MARGIN = 40;
+const PADDING = 10;
 
 export default class LoadMonitoringApp extends Component {
     updateData (ev) {
@@ -32,6 +33,7 @@ export default class LoadMonitoringApp extends Component {
                         <SVGContainer
                             data={state.loadData}
                             margin={MARGIN}
+                            padding={PADDING}
                         /> :
                         <p>Loading ...</p>
                    }

@@ -7,6 +7,8 @@ export default class SVGContainer extends Component {
         const height = (width * (1 / 3));
         return {
             height,
+            margin: this.props.margin,
+            padding: this.props.padding,
             width
         }
     }
@@ -22,7 +24,6 @@ export default class SVGContainer extends Component {
                 <TimeSeries
                     data={props.data}
                     dimensions={this.getDimensions()}
-                    margin={props.margin}
                 />
             </svg>
         );
