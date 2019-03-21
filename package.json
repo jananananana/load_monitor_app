@@ -5,19 +5,28 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "npm run build &&node ./src/server/server.js"
+    "start": "npm run build && node ./src/server/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "d3-array": "^2.0.3",
+    "d3-axis": "^1.0.12",
+    "d3-scale": "^3.0.0",
+    "d3-selection": "^1.4.0",
+    "d3-shape": "^1.3.5",
+    "d3-time": "^1.0.11",
     "express": "^4.16.4",
+    "preact": "^8.4.2",
     "ws": "^6.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/preset-env": "^7.3.4",
     "babel-loader": "^8.0.5",
+    "babel-preset-preact": "^1.1.0",
     "clean-webpack-plugin": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.29.6",

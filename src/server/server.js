@@ -7,6 +7,7 @@ const express = require("express"),
     os = require('os'),
     SERVER_PORT = 3000,
     DIST_DIR = "dist",
+    MIN_INTERVAL = 600000,
     HTML_FILE = path.relative(DIST_DIR, "/index.html");
 
 const app = express();
@@ -15,21 +16,23 @@ const websocketServer = new WebSocket.Server({ server });
 
 app.use(express.static(DIST_DIR));
 
+const getDatum = () => ({
+        ts: Date.now(),
+        value: (os.loadavg()[0] / os.cpus().length)
+});
+
+const newDatum = () => JSON.stringify(getDatum());
+
 websocketServer.on("connection", (wsc) => {
+    setImmediate(() => wsc.send(newDatum()));
     const loadInterval = setInterval(
-        () => {
-            const cpus = os.cpus().length;
-            const avg = os.loadavg()[0]/cpus 
-            wsc.send(JSON.stringify({
-                time: Date.now(),
-                value: avg
-            }));
-        },
+        () => wsc.send(newDatum()),
         10000
     );
 
-    websocketServer.on('close', function() {
+    wsc.on('close', () => {
         clearInterval(loadInterval);
+        wsc.close();
     });
 });
 
