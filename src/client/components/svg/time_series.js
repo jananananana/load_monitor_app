@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import { createXAxis, createYAxis } from "../../lib/d3";
+import Axes from "./axes";
 import ScatterPlot from "./scatter_plot";
 import SparkLine from "./spark_line";
 

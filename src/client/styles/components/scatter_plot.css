@@ -1,3 +1,13 @@
-circle.scatter-plot-point {
+circle.scatter-plot-dot {
     fill: #AA2E00;
+}
+
+text.scatter-plot-label {
+    display: none;
+    fill: #330000;
+    font: 700 16px/1  sans-serif;
+    text-anchor: middle;
+}
+text.scatter-plot-label:hover {
+    display: block;
 }

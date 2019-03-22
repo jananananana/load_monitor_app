@@ -2,7 +2,13 @@ import { extent } from "d3-array";
 import { axisBottom, axisLeft } from "d3-axis";
 import { scaleLinear, scaleUtc } from "d3-scale";
 import { select } from "d3-selection";
-import { line } from 'd3-shape';
+import { line } from "d3-shape";
+import { utcFormat } from "d3-time-format";
+
+function formatUtcToTime (utc) {
+    const formatTime = utcFormat("%H:%M:%S")
+    return formatTime(utc);
+}
 
 function generateScales (props) {
     const { height, margin, width } = props.dimensions;
@@ -44,4 +50,10 @@ function createSparkLine (props) {
     return sparkLine(props.data);
 }
 
-export { generateScales, createXAxis, createYAxis, createSparkLine };
+export {
+    createSparkLine,
+    createXAxis,
+    createYAxis,
+    formatUtcToTime,
+    generateScales,
+};

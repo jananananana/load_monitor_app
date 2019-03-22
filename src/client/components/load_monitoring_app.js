@@ -1,6 +1,9 @@
 import { h, Component } from "preact";
 import WebSocketClient from "../websocket_client";
 import SVGContainer from "./svg/svg_container";
+import "../styles/reset.css";
+import "../styles/loading.css";
+import "../styles/components/app.css";
 
 const MAX_DATA_LEN = 60;
 const MARGIN = 40;
@@ -22,20 +25,20 @@ export default class LoadMonitoringApp extends Component {
 
     render(_, state) {
         return (
-            <div id="load-monitor-container">
-                <header id="load-monitor-header">
+            <div className="load-monitor-container">
+                <header className="load-monitor-header">
                     <h1>CPU Load Monitoring App</h1>
                 </header>
-                <main id="load-monitor-content">
+                <main className="load-monitor-content">
                    {
                         state.loadData &&
-                        state.loadData.length > 0 ?
+                        state.loadData.length > 1 ?
                         <SVGContainer
                             data={state.loadData}
                             margin={MARGIN}
                             padding={PADDING}
                         /> :
-                        <p>Loading ...</p>
+                        <div class="loading"></div>
                    }
                 </main>
             </div>
