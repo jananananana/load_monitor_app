@@ -30,7 +30,7 @@ export default class LoadMonitoringApp extends Component {
                     <h1>CPU Load Monitoring App</h1>
                 </header>
                 <main className="load-monitor-content">
-                   {
+                    {
                         state.loadData &&
                         state.loadData.length > 1 ?
                         <SVGContainer
@@ -38,8 +38,10 @@ export default class LoadMonitoringApp extends Component {
                             margin={MARGIN}
                             padding={PADDING}
                         /> :
-                        <div class="loading"></div>
-                   }
+                        <div className="loading-container">
+                            <div className="loading" />
+                        </div>
+                    }
                 </main>
             </div>
         );

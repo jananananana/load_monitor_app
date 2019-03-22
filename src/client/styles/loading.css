@@ -1,8 +1,12 @@
 /* https://loading.io/css/
 */
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+}
+
 .loading {
-  display: inline-block;
   width: 64px;
   height: 64px;
 }
@@ -13,8 +17,8 @@
   height: 46px;
   margin: 1px;
   border-radius: 50%;
-  border: 5px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border: 5px solid #330000;
+  border-color: #330000 transparent #330000 transparent;
   animation: loading 1.2s linear infinite;
 }
 @keyframes loading {
