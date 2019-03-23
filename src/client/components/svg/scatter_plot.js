@@ -1,12 +1,16 @@
 import { h, Component } from "preact";
-import { formatUtcToTime, generateScales } from "../../lib/d3";
+import {
+    formatFixedNumber,
+    formatUtcToTime,
+    generateScales
+} from "../../lib/d3";
 import "../../styles/components/scatter_plot.css";
 
 export default class ScatterPlot extends Component {
     createCircles () {
         const { xScale, yScale } = generateScales(this.props);
-        const formatY = d => +d.value.toFixed(2);
         const x = d => xScale(d.ts);
+        const formatY = d => formatFixedNumber(d.value, 2);
         const y = d => yScale(formatY(d));
         return this.props.data.map(d =>
             <g className="scatter-plot-point" >

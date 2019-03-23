@@ -1,0 +1,9 @@
+section.load-monitor-graph {
+    display: flex;
+    justify-content: center;
+}
+
+h2.load-monitor-graph-title {
+    font: 700 18px/1  sans-serif;
+    padding: 10px;
+}

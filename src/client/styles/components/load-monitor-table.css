@@ -1,0 +1,38 @@
+h2.load-monitor-table-title {
+    font: 700 18px/1  sans-serif;
+    margin-left: 10px;
+    padding: 10px 10px 0 10px;
+}
+
+div.load-monitor-alerts-wrapper {
+    min-height: 40vh;
+    position: relative;
+}
+
+ul.load-monitor-alerts {
+    border: 2px solid #eee;
+    border-radius: 5px;
+    bottom: 20px;
+    font: 400 16px/1  sans-serif;
+    left: 20px;
+    margin: 0;
+    overflow: scroll;
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+li.load-monitor-alert {
+    border-bottom: 1px solid #eee;
+    padding: 10px 20px;
+}
+
+li.load-monitor-alert:last-child {
+    border-bottom: none;
+}
+  
+li.load-monitor-alert:nth-child(even) {
+    background-color: #eee;
+}

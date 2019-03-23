@@ -2,6 +2,7 @@ import { h, Component } from "preact";
 import Axes from "./axes";
 import ScatterPlot from "./scatter_plot";
 import SparkLine from "./spark_line";
+import "../../styles/components/time_series.css";
 
 export default class TimeSeries extends Component {
     render(props) {
@@ -16,7 +17,6 @@ export default class TimeSeries extends Component {
                 <rect
                     className="time-series-background"
                     height={height - margin}
-                    style={{ fill: "#eee" }}
                     width={width}
                     x={0}
                     y={0}

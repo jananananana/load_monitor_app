@@ -10,6 +10,10 @@ function formatUtcToTime (utc) {
     return formatTime(utc);
 }
 
+function formatFixedNumber (number, percision) {
+    return +number.toFixed(percision);
+}
+
 function generateScales (props) {
     const { height, margin, width } = props.dimensions;
     return {
@@ -42,7 +46,7 @@ function createYAxis (node, props) {
 
 function createSparkLine (props) {
     const { xScale, yScale } = generateScales(props);
-    const formatY = d => +d.value.toFixed(2);
+    const formatY = d => formatFixedNumber(d.value, 2);
     const sparkLine = line()
         .x(d => xScale(d.ts))
         .y(d => yScale(formatY(d)));
@@ -54,6 +58,7 @@ export {
     createSparkLine,
     createXAxis,
     createYAxis,
+    formatFixedNumber,
     formatUtcToTime,
     generateScales,
 };

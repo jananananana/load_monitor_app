@@ -1,49 +1,68 @@
 import { h, Component } from "preact";
-import WebSocketClient from "../websocket_client";
-import SVGContainer from "./svg/svg_container";
+import { updateLogData, updateGraphData } from "../lib/state_helpers";
+import {createWebSocketClient, parseMessage } from "../lib/websockets";
+import LoadMonitorGraph from "./load_monitor_graph";
+import LoadMonitorTable from "./load_monitor_table";
 import "../styles/reset.css";
-import "../styles/loading.css";
 import "../styles/components/app.css";
+import { debug } from "util";
 
-const MAX_DATA_LEN = 60;
-const MARGIN = 40;
-const PADDING = 10;
+export default class LoadMonitorApp extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            avgLoad: 0,
+            graphData: [],
+            highLoad: false,
+            logData: [],
+        };
+    }
 
-export default class LoadMonitoringApp extends Component {
     updateData (ev) {
-        const loadData = this.state.loadData || [];      
-        if (loadData.length === MAX_DATA_LEN) {
-            loadData.shift();
-        }
-        loadData.push(WebSocketClient.parseMessage(ev));
-        this.setState({ loadData });
+        const datum = parseMessage(ev);
+        let stateUpdates = {
+            graphData: updateGraphData(
+                datum,
+                this.state.graphData,
+                LoadMonitorApp.MAX_DATA_LEN,
+            ),
+        };
+        const logDataUpdates = updateLogData({
+            datum,
+            highLoad: this.state.highLoad,
+            logData: this.state.logData,
+            prevLoad: this.state.avgLoad,
+        });
+        stateUpdates = Object.assign(stateUpdates, logDataUpdates);
+        this.setState(stateUpdates);
     }
     componentDidMount() {
-        this.ws = WebSocketClient.createWebSocketClient();
-        this.ws.onmessage = ev => this.updateData(ev);
+        const ws = createWebSocketClient();
+        ws.onmessage = ev => this.updateData(ev);
+        this.setState({ ws });
     }
 
     render(_, state) {
         return (
             <div className="load-monitor-container">
                 <header className="load-monitor-header">
-                    <h1>CPU Load Monitoring App</h1>
+                    <h1>CPU Load Monitor</h1>
                 </header>
-                <main className="load-monitor-content">
-                    {
-                        state.loadData &&
-                        state.loadData.length > 1 ?
-                        <SVGContainer
-                            data={state.loadData}
-                            margin={MARGIN}
-                            padding={PADDING}
-                        /> :
-                        <div className="loading-container">
-                            <div className="loading" />
-                        </div>
-                    }
-                </main>
+                {
+                    !!state.ws &&
+                    <main className="load-monitor-content">
+                        <LoadMonitorGraph
+                            margin={LoadMonitorApp.MARGIN}
+                            padding={LoadMonitorApp.PADDING}
+                            data={state.graphData}
+                        />
+                        <LoadMonitorTable data={state.logData} />
+                    </main>
+                }
             </div>
         );
     }
 }
+LoadMonitorApp.MARGIN = 40;
+LoadMonitorApp.MAX_DATA_LEN = 60;
+LoadMonitorApp.PADDING = 10;

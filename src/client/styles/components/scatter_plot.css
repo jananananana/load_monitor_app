@@ -5,9 +5,7 @@ circle.scatter-plot-dot {
 text.scatter-plot-label {
     display: none;
     fill: #330000;
-    font: 700 16px/1  sans-serif;
+    font: 700 14px/1  sans-serif;
     text-anchor: middle;
-}
-text.scatter-plot-label:hover {
-    display: block;
+    transform: rotate(-45deg);
 }
