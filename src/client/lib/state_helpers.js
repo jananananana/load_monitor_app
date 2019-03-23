@@ -9,10 +9,10 @@ function updateLogData (options = {}) {
     } = options;
     const avgLoad = (prevLoad + datum.value) / 12;
     const updates = { avgLoad };
-    if (avgLoad > .24) {
-        logData.push(createAlert(datum, true));
-        updates.logData = logData;
+    if (avgLoad > 1) {
         updates.highLoad = true;
+        logData.push(createAlert(datum, updates.highLoad));
+        updates.logData = logData;
         return updates;
     }
     if (highLoad === true) {
